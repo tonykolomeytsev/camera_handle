@@ -79,3 +79,4 @@ def main():
     rospy.init_node(name="camera_handle")
     handle = CameraHandle()
     handle.run()
+    rospy.spin()
