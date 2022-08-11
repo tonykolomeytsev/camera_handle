@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-    <node name="camera_handle" pkg="camera_handle" type="handle.py" output="log" respawn="false" respawn_delay="0">
+    <node name="camera_handle" pkg="camera_handle" type="handle.py" output="screen" respawn="false" respawn_delay="0">
         
-        <param name="output_topic" value="/camera/image_raw"/>
-        <param name="initial_topic" value="/cam0/image_raw"/>
-        <rosparam param="source_topics" subst_value="true">
+        <param name="output_topic" type="string" value="/camera/image_raw"/>
+        <param name="initial_topic" type="string" value="/cam0/image_raw"/>
+        
+        <rosparam param="source_topics">
             - /cam0/image_raw
             - /cam1/image_raw
             - /cam2/image_raw
