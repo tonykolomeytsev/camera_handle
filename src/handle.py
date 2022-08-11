@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import message_filters
 from sensor_msgs.msg import Image
 from std_msgs.msg import String
 import rospy
