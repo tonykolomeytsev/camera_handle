@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
     <node name="camera_handle" pkg="camera_handle" type="handle.py" output="screen" respawn="false" respawn_delay="0">
 
