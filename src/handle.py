@@ -70,8 +70,8 @@ class CameraHandle:
     def on_frame_received(self, image, topic_name):
         if topic_name == self.selected_topic:
             if not rospy.is_shutdown():
-                rospy.loginfo("republish frame from topic %s to topic %s",
-                              self.selected_topic, self.config.output_topic)
+                rospy.logdebug_throttle("republish frame from topic %s to topic %s",
+                                        self.selected_topic, self.config.output_topic)
                 self.frames_publisher.publish(image)
 
 
@@ -80,3 +80,7 @@ def main():
     handle = CameraHandle()
     handle.run()
     rospy.spin()
+
+
+if __name__ == "__main__":
+    main()
