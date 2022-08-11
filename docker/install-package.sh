@@ -20,5 +20,5 @@ source /opt/ros/noetic/setup.bash
 catkin init
 catkin_make camera_handle
 
-echo '/opt/ros/noetic/setup.bash' >> ~/.bashrc
-echo '/root/catkin_ws/devel/setup.bash' >> ~/.bashrc
+echo 'source /opt/ros/noetic/setup.bash' >> ~/.bashrc
+echo 'source /root/catkin_ws/devel/setup.bash' >> ~/.bashrc
