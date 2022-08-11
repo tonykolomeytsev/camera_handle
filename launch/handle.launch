@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="camera_handle" pkg="camera_handle" type="handle.py" output="log" respawn="false" respawn_delay="0">
+        
+        <param name="output_topic" value="/camera/image_raw"/>
+        <param name="initial_topic" value="/cam0/image_raw"/>
+        <rosparam param="source_topics" subst_value="true">
+            - /cam0/image_raw
+            - /cam1/image_raw
+            - /cam2/image_raw
+            - /cam3/image_raw
+            - /cam4/image_raw
+            - /cam5/image_raw
+        </rosparam>
+    </node>    
+</launch>
