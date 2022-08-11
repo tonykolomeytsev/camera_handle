@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 from sensor_msgs.msg import Image
 from std_msgs.msg import String
