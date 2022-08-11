@@ -23,7 +23,7 @@ class CameraHandleConfig:
 
 class CameraHandle:
 
-    def __init__(self, config=CameraHandleConfig()):
+    def __init__(self, config: CameraHandleConfig = CameraHandleConfig()):
         self.config = config
         self.selected_topic = config.initial_topic
         self.current_subscriber = None
@@ -44,7 +44,7 @@ class CameraHandle:
             queue_size=1,
         )
 
-    def on_handle_updated(self, selected_topic):
+    def on_handle_updated(self, selected_topic: String):
         self.selected_topic = selected_topic.data
         rospy.loginfo("topic selected: %s", self.selected_topic)
         if self.current_subscriber:
@@ -57,7 +57,7 @@ class CameraHandle:
             queue_size=10,
         )
 
-    def on_frame_received(self, image):
+    def on_frame_received(self, image: Image):
         if not rospy.is_shutdown():
             self.frames_publisher.publish(image)
 
