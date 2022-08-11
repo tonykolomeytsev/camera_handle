@@ -19,3 +19,6 @@ git clone --depth 1 https://github.com/tonykolomeytsev/camera_handle.git src/cam
 source /opt/ros/noetic/setup.bash
 catkin init
 catkin_make camera_handle
+
+echo '/opt/ros/noetic/setup.bash' >> ~/.bashrc
+echo '/root/catkin_ws/devel/setup.bash' >> ~/.bashrc
