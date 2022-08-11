@@ -46,7 +46,7 @@ class CameraHandle:
 
     def on_handle_updated(self, selected_topic):
         self.selected_topic = selected_topic.data
-        rospy.loginfo("topic selected: %s", selected_topic)
+        rospy.loginfo("topic selected: %s", self.selected_topic)
         if self.current_subscriber:
             self.current_subscriber.unregister()
 
