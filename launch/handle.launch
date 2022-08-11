@@ -4,14 +4,5 @@
         
         <param name="output_topic" type="string" value="/camera/image_raw"/>
         <param name="initial_topic" type="string" value="/cam0/image_raw"/>
-        
-        <rosparam param="source_topics">
-            - /cam0/image_raw
-            - /cam1/image_raw
-            - /cam2/image_raw
-            - /cam3/image_raw
-            - /cam4/image_raw
-            - /cam5/image_raw
-        </rosparam>
     </node>    
 </launch>

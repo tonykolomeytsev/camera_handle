@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import message_filters
 from sensor_msgs.msg import Image
 from std_msgs.msg import String
 import rospy
@@ -8,17 +9,9 @@ import rospy
 class CameraHandleConfig:
 
     def __init__(self):
-        self.source_topics = rospy.get_param(
-            param_name="~/camera_handle/source_topics",
-            default=[],
-        )
-        rospy.loginfo("source topics: %s" % self.source_topics)
-        assert len(self.source_topics) > 0, \
-            "source_topics must not be an empty list"
-
         self.initial_topic = rospy.get_param(
             param_name="~/camera_handle/initial_topic",
-            default=self.source_topics[0],
+            default="/cam0/image_raw",
         )
         rospy.loginfo("initial topic: %s", self.initial_topic)
 
@@ -34,10 +27,11 @@ class CameraHandle:
     def __init__(self, config=CameraHandleConfig()):
         self.config = config
         self.selected_topic = config.initial_topic
+        self.current_subscriber = None
 
     def run(self):
         # create publisher, to publish frames from selected topic
-        rospy.Publisher(
+        self.frames_publisher = rospy.Publisher(
             name=self.config.output_topic,
             data_class=Image,
             queue_size=1,
@@ -51,28 +45,22 @@ class CameraHandle:
             queue_size=1,
         )
 
-        # listen to all specified camera topics
-        for topic_name in self.config.source_topics:
-            rospy.Subscriber(
-                name=topic_name,
-                data_class=Image,
-                callback=lambda data: self.on_frame_received(
-                    image=data,
-                    topic_name=topic_name,
-                ),
-                queue_size=1,
-            )
-
     def on_handle_updated(self, selected_topic):
+        self.selected_topic = selected_topic.data
         rospy.loginfo("topic selected: %s", selected_topic)
-        self.selected_topic = selected_topic
+        if self.current_subscriber:
+            self.current_subscriber.unregister()
 
-    def on_frame_received(self, image, topic_name):
-        if topic_name == self.selected_topic:
-            if not rospy.is_shutdown():
-                rospy.logdebug_throttle("republish frame from topic %s to topic %s",
-                                        self.selected_topic, self.config.output_topic)
-                self.frames_publisher.publish(image)
+        self.current_subscriber = rospy.Subscriber(
+            name=self.selected_topic,
+            data_class=Image,
+            callback=self.on_frame_received,
+            queue_size=10,
+        )
+
+    def on_frame_received(self, image):
+        if not rospy.is_shutdown():
+            self.frames_publisher.publish(image)
 
 
 def main():
