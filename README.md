@@ -70,3 +70,14 @@ And then a standard procedure to run:
 ```bash
 roslaunch camera_handle handle.launch
 ```
+
+## Launch file parameters
+
+- `output_topic` is the name of the topic where you want to publish frames of the selected camera. Default is `/camera/image_raw`.
+    ```xml
+    <param name="output_topic" type="string" value="/camera/image_raw" />
+    ```
+- `initial_topic` is the name of the input topic that will be selected when the node starts (so as not to publish this name in the `/camera/handle` topic). Empty by default - the node will not subscribe to any topic until the name comes in /camera/handle of the topic.
+    ```xml
+    <param name="initial_topic" type="string" value="/cam0/image_raw" />
+    ```
