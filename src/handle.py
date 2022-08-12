@@ -8,13 +8,13 @@ import rospy
 class CameraHandleConfig:
 
     def __init__(self):
-        self.initial_topic = rospy.get_param(
+        self.initial_topic: str = rospy.get_param(
             param_name="~/camera_handle/initial_topic",
-            default="/cam0/image_raw",
+            default="",
         )
         rospy.loginfo("initial topic: %s", self.initial_topic)
 
-        self.output_topic = rospy.get_param(
+        self.output_topic: str = rospy.get_param(
             param_name="~/camera_handle/output_topic",
             default="/camera/image_raw",
         )
@@ -26,7 +26,7 @@ class CameraHandle:
     def __init__(self, config: CameraHandleConfig = CameraHandleConfig()):
         self.config = config
         self.selected_topic = config.initial_topic
-        self.current_subscriber = None
+        self.current_subscriber: rospy.Subscriber = None
 
     def run(self):
         # create publisher, to publish frames from selected topic
@@ -43,6 +43,15 @@ class CameraHandle:
             callback=self.on_handle_updated,
             queue_size=1,
         )
+
+        # subscribe to initial topic if it's not empty
+        if len(self.selected_topic) > 0:
+            self.current_subscriber = rospy.Subscriber(
+                name=self.selected_topic,
+                data_class=Image,
+                callback=self.on_frame_received,
+                queue_size=10,
+            )
 
     def on_handle_updated(self, selected_topic: String):
         self.selected_topic = selected_topic.data
