@@ -22,3 +22,4 @@ catkin_make camera_handle
 
 echo 'source /opt/ros/noetic/setup.bash' >> ~/.bashrc
 echo 'source /root/catkin_ws/devel/setup.bash' >> ~/.bashrc
+sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
